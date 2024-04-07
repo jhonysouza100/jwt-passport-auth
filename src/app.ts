@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import express from 'express'
+import express, { Request, Response } from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import { router } from './router'
@@ -19,6 +19,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // routes
+app.get('/', (req: Request, res: Response) => { res.send("Hola mundo")})
 app.use(router)
 
 export default app

@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { connect } from "mongoose"
+import { ConnectOptions, connect } from "mongoose"
 import config from '../config'
 
 async function connection(): Promise<void> {
