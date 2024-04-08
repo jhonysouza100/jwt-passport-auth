@@ -9,7 +9,7 @@ const generateBcrypt = async (key: string) => {
   return hash
 }
 
-const compareBcrypt = async (pass: string, thisPass: string) {
+const compareBcrypt = async (pass: string, thisPass: string) => {
   
   const response = await bcrypt.compare(pass, thisPass)
 

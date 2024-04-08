@@ -45,4 +45,4 @@ userSchema.methods.comparePassword = async function (password: string): Promise<
 
 }
 
-export default model('usersPass', userSchema)
+export default model<User>('usersPass', userSchema)
