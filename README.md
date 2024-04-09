@@ -98,13 +98,44 @@ app.listen(app.get('port'), () => console.log(`Server listen on port:${app.get('
 
 ## Configure Passport Settings
 
-`./src/config/passport.ts`
+`./src/app.ts`
 
 ```javascript
-import passport from 'passport'
+import passport from "passport"
+import passportMiddleware from "./middlewares/passport.middleware"
 
-const pass = new Passport()
+// api middlewares
+app.use(passport.initialize())
+passport.use(passportMiddleware)
 
-export { pass }
+```
+
+`./src/middleares/passport.middleware.ts`
+
+```javascript
+import { Strategy, ExtractJwt, StrategyOptions } from "passport-jwt";
+import config from "../config"
+import userModel from "../models/user.model";
+
+const options: StrategyOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: config.jwtSecret
+}
+
+export default new Strategy(options, async (payload, done) => {
+  
+  try {
+
+    const user = await userModel.findById(payload.id)
+  
+    if(user) return done(null, user)
+  
+    return done(null, false)
+
+  } catch (error) {
+    console.log(error)
+  }
+
+})
 
 ```

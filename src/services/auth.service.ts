@@ -20,9 +20,9 @@ const loginService = async (req: User) => {
 
   if(!user) throw new Error("USER_NOT_FOUND")
   
-  const isPasswordcorrect = await user.comparePassword(req.password)
+  const isPasswordCorrect = await user.comparePassword(req.password)
   
-  if(!isPasswordcorrect) throw new Error("INCORRECT_PASSWORD")
+  if(!isPasswordCorrect) throw new Error("INCORRECT_PASSWORD")
   
   const jwt = generateJWT(user)
 

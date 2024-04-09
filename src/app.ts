@@ -4,6 +4,9 @@ import cors from 'cors'
 import morgan from 'morgan'
 import { router } from './router'
 
+import passport from 'passport'
+import passportMiddleware from './middlewares/passport.middleware'
+
 // initializations
 const app = express()
 
@@ -17,6 +20,9 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(passport.initialize())
+passport.use(passportMiddleware)
+
 
 // routes
 app.get('/', (req: Request, res: Response) => { res.send("Hola mundo")})
