@@ -47,6 +47,8 @@ tsc --init
 
 ```
 
+## Project Setup
+
 > Create MVC Structure
 
 `/src`
@@ -54,8 +56,6 @@ tsc --init
 ```bash
 mkdir router controllers services utils middlewares models interfaces config connection
 ```
-
-## Initialize project
 
 `./src/app.ts`
 
