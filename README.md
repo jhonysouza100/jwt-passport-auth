@@ -1,4 +1,7 @@
-# Json Web Token + Passport + Morgan
+# JSON Web Token + Passport + Bcrypt
+
+En este ejemplo practico de Javascript/Typescript, se crea una REST API usando Nodejs, Mongodb (a traves de Mongoose) adicionalmente de modulos como bcrypt para el cifrado de datos sencibles y passport para validadación del token.
+
 
 ## Initialize
 
@@ -98,6 +101,8 @@ app.listen(app.get('port'), () => console.log(`Server listen on port:${app.get('
 
 ## Configure Passport Settings
 
+> Initialize in App.ts
+
 `./src/app.ts`
 
 ```javascript
@@ -109,6 +114,7 @@ app.use(passport.initialize())
 passport.use(passportMiddleware)
 
 ```
+> Create a middleware function
 
 `./src/middleares/passport.middleware.ts`
 
@@ -137,5 +143,78 @@ export default new Strategy(options, async (payload, done) => {
   }
 
 })
+```
+> Use the middleware in routes
 
+`./src/router/private.routes.ts`
+
+```javascript
+import { Router, Request, Response } from "express";
+import passport from "passport"
+
+const router = Router()
+
+router.get('/private', passport.authenticate('jwt', { session: false}), (req: Request, res: Response) => {
+  try {
+    res.send('AUTHORIZED_USER')
+  } catch (error) {
+    res.send('NO_ATHORIZED_USER')
+  }
+})
+
+export { router }
+```
+
+## Register and Login Example
+
+> `Register` new user
+
+```php
+POST http://localhost:3000/api/auth/signup
+```
+
+Body JSON:
+
+```json
+{
+  "email": "jhony@gmail.com",
+  "password": "123"
+}
+```
+
+> `Login` user
+
+```php
+POST http://localhost:3000/api/auth/login
+```
+
+Body JSON:
+
+```json
+{
+  "email": "jhony@gmail.com",
+  "password": "123"
+}
+```
+
+#### *Response:*
+
+```json
+{
+  "token": "!#$%&123qwerty"
+}
+```
+
+## Private Route Parameters
+
+```php
+GET http://localhost:3000/api/private/private
+```
+
+HTTP Hearders: 
+
+```json
+  {
+    "Authorization": "Bearer !#$%&123qwerty"
+  }
 ```

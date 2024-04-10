@@ -17,7 +17,7 @@ export default new Strategy(options, async (payload, done) => {
   
     return done(null, false)
 
-  } catch (error) {
+  } catch (error) { 
     console.log(error)
   }
 
